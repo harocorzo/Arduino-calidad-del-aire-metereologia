@@ -1,3 +1,6 @@
+ // con este archivo puedes leer los datos, al abrir desde herramientas el 
+// serial port (para ver los datos numericos) o 
+// serial plotter, para ver la grafica
 int sensorValue; // Variable para leer la salida analógica
 int digitalValue; // Variable para leer la salida digital
 
