@@ -1,4 +1,4 @@
-Pasos para graficar datos de Arduino en Windows
+Pasos para graficar datos de Arduino en Windows con python 2.7
 1.Instalar la librería de comunicación serie en Windows:
     Abre la Terminal de Windows o el Símbolo del sistema (CMD) y ejecuta este comando para instalar la librería que usará el script:
         pip install pyserial
