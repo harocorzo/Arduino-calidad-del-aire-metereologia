@@ -1,0 +1,37 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+try:
+    # 1. Cargar los datos del archivo CSV
+    datos = pd.read_csv('datos_mq135.csv')
+
+    # Convertir la columna 'Tiempo' a formato de fecha y hora
+    datos['Tiempo'] = pd.to_datetime(datos['Tiempo'])
+
+    # 2. Configurar la ventana y la gráfica
+    plt.figure(figsize=(10, 5))
+    
+    # Dibujar la curva de lecturas analógicas del sensor
+    plt.plot(datos['Tiempo'], datos['Valor_Analogico'], color='#1f77b4', linewidth=1.5, label='Lectura MQ135 (ADC)')
+    
+    # Línea horizontal de referencia / umbral
+    plt.axhline(y=400, color='r', linestyle='--', linewidth=1.2, label='Umbral de referencia (400)')
+
+    # 3. Títulos y etiquetas de los ejes
+    plt.title('Calidad del Aire - Sensor MQ135', fontsize=14, fontweight='bold')
+    plt.xlabel('Hora de Medición', fontsize=12)
+    plt.ylabel('Valor Analógico (0 - 1023)', fontsize=12)
+    plt.grid(True, linestyle=':', alpha=0.6)
+    plt.legend(loc='upper right')
+    
+    # Formatear el eje X para que las horas se lean sin amontonarse
+    plt.gcf().autofmt_xdate()
+    plt.tight_layout()
+
+    # 4. Guardar la gráfica como imagen y mostrarla en pantalla
+    plt.savefig('grafica_mq135.png', dpi=300)
+    print("¡Gráfica generada exitosamente y guardada como 'grafica_mq135.png'!")
+    plt.show()
+
+except Exception as e:
+    print("Error al generar la gráfica: " + str(e))
