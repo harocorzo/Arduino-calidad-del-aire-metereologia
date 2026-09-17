@@ -1,7 +1,11 @@
+# ejecutar python desde windows Labfis
+#py -3 graficar_interactiva_mq135.py
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import mplcursors  # 1. Importamos la librería para interactividad
 # Si no la tienes instalada en tu entorno de Python, ejecuta primero en la terminal
+#py -3 -m pip install mplcursors
 # pip install mplcursors 
 
 # Nombre de tu nuevo archivo
