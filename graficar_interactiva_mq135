@@ -4,8 +4,8 @@ import mplcursors  # 1. Importamos la librería para interactividad
 
 # Nombre de tu nuevo archivo
 print("dame el mes y el dia MMDD del archivo")
-dia = input("MMDD: ")  # Mantenemos como string para concatenar correctamente el nombre
-archivo_csv = dia + "datos_mq135.csv"
+dia=input("MMDD: ")
+archivo_csv = f"{dia}datos_mq135.csv" 
 
 try:
     # 1. Cargar los datos del archivo CSV
