@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import mplcursors  # 1. Importamos la librería para interactividad
+# Si no la tienes instalada en tu entorno de Python, ejecuta primero en la terminal
+# pip install mplcursors 
 
 # Nombre de tu nuevo archivo
 print("dame el mes y el dia MMDD del archivo")
