@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Nombre de tu nuevo archivo
 print("dame el mes y el dia MMDD del archivo")
-dia=int(input("MMDD")
+dia=int(input("MMDD"))
 archivo = dia+"datos_mq135.csv" 
 archivo_csv = archivo
 # archivo_csv = 'datos_mq135.csv'
