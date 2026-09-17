@@ -1,0 +1,65 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import mplcursors  # 1. Importamos la librería para interactividad
+
+# Nombre de tu nuevo archivo
+print("dame el mes y el dia MMDD del archivo")
+dia = input("MMDD: ")  # Mantenemos como string para concatenar correctamente el nombre
+archivo_csv = dia + "datos_mq135.csv"
+
+try:
+    # 1. Cargar los datos del archivo CSV
+    datos = pd.read_csv(archivo_csv)
+
+    # Limpiar líneas duplicadas del encabezado 'Tiempo'
+    datos = datos[datos['Tiempo'] != 'Tiempo'].copy()
+
+    # Convertir 'Valor_Analogico' a tipo numérico
+    datos['Valor_Analogico'] = pd.to_numeric(datos['Valor_Analogico'], errors='coerce')
+
+    # Convertir la columna 'Tiempo' a fecha y hora
+    datos['Tiempo'] = pd.to_datetime(datos['Tiempo'], errors='coerce')
+
+    # Eliminar filas con valores nulos o corruptos
+    datos.dropna(inplace=True)
+
+    # 2. Configurar la ventana y la gráfica
+    plt.figure(figsize=(12, 6))
+    
+    # Guardamos la referencia de la curva dibujada en la variable 'linea'
+    linea = plt.plot(datos['Tiempo'], datos['Valor_Analogico'], color='#1f77b4', linewidth=1, label='Lectura MQ135 (ADC)')
+    
+    # Línea horizontal de referencia / umbral
+    plt.axhline(y=400, color='r', linestyle='--', linewidth=1.2, label='Umbral de referencia (400)')
+
+    # 3. Títulos y etiquetas de los ejes
+    plt.title('Calidad del Aire - Registro MQ135 (' + archivo_csv + ')', fontsize=14, fontweight='bold')
+    plt.xlabel('Hora de Medición', fontsize=12)
+    plt.ylabel('Valor Analógico (0 - 1023)', fontsize=12)
+    plt.grid(True, linestyle=':', alpha=0.6)
+    plt.legend(loc='upper right')
+    
+    # Formatear el eje X para las fechas y horas
+    plt.gcf().autofmt_xdate()
+    plt.tight_layout()
+
+    # 4. Configurar el cursor interactivo al pasar el ratón (hover)
+    cursor = mplcursors.cursor(linea, hover=True)
+
+    @cursor.connect("add")
+    def on_add(sel):
+        # Convertimos la coordenada X (fecha interna de Matplotlib) a formato legible de hora
+        fecha = pd.to_datetime(sel.target[0], unit='D', origin='1970-01-01').strftime('%H:%M:%S')
+        valor = sel.target[1]
+        # Personalizamos el texto que se despliega en la caja flotante
+        sel.annotation.set_text(f"Hora: {fecha}\nValor: {valor:.1f}")
+
+    # 5. Guardar la gráfica como imagen y mostrarla
+    nombre_imagen = archivo_csv.replace('.csv', '.png')
+    plt.savefig(nombre_imagen, dpi=300)
+    print("¡Gráfica generada exitosamente y guardada como '" + nombre_imagen + "'!")
+    
+    plt.show()
+
+except Exception as e:
+    print("Error al generar la gráfica: " + str(e))
