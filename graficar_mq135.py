@@ -3,9 +3,8 @@ import matplotlib.pyplot as plt
 
 # Nombre de tu nuevo archivo
 print("dame el mes y el dia MMDD del archivo")
-dia=int(input("MMDD"))
-archivo = dia+"datos_mq135.csv" 
-archivo_csv = archivo
+dia=input("MMDD: ")
+archivo_csv = f"{dia}datos_mq135.csv" 
 # archivo_csv = 'datos_mq135.csv'
 
 try:
